@@ -11,6 +11,11 @@ import spark.Response;
 
 import static edu.kit.ipd.crowdcontrol.objectservice.rest.RequestUtil.*;
 
+/**
+ * Handles requests to notification resources.
+ *
+ * @author Niklas Keller
+ */
 public class NotificationResource {
     private NotificationRestOperations operations;
 
