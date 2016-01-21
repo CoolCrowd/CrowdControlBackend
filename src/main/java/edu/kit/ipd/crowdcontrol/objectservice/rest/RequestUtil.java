@@ -5,6 +5,19 @@ import edu.kit.ipd.crowdcontrol.objectservice.rest.exceptions.InternalServerErro
 import spark.Request;
 
 public class RequestUtil {
+<<<<<<< 229a56370b7483c324a70905fffab9f0b6664906
+=======
+    public static String getParam(Request request, String param) {
+        String paramValue = request.params(param);
+
+        if (paramValue == null) {
+            throw new InternalServerErrorException("Expected parameter '%s' not present.", param);
+        }
+
+        return paramValue;
+    }
+    
+>>>>>>> rest: reflected recent database-api changes, changed indentify request
     public static int getParamInt(Request request, String param) {
         String paramValue = request.params(param);
 
