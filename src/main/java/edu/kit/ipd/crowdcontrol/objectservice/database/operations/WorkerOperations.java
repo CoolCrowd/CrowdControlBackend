@@ -6,7 +6,6 @@ import edu.kit.ipd.crowdcontrol.objectservice.proto.Worker;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 
-import java.util.List;
 import java.util.Optional;
 
 import static edu.kit.ipd.crowdcontrol.objectservice.database.model.Tables.WORKER;
@@ -31,7 +30,7 @@ public class WorkerOperations extends AbstractOperations {
      * @return Worker.
      */
     public Optional<Worker> identifyWorker(String platform, String identity) {
-        return create.fetchOptional(WORKER, Tables.WORKER.PLATFORM.eq(platform).and(Tables.WORKER.IDENTIFICATION.eq(identity)))
+        return create.fetchOptional(WORKER, WORKER.PLATFORM.eq(platform).and(WORKER.IDENTIFICATION.eq(identity)));
                 .map(WorkerOperations::toProto);
     }
 
@@ -56,13 +55,13 @@ public class WorkerOperations extends AbstractOperations {
      *
      * @return Worker.
      */
-    public Optional<Worker> get(int id) {
+    public Optional<Worker> getWorker(int id) {
         return create.fetchOptional(WORKER, Tables.WORKER.ID_WORKER.eq(id))
                 .map(WorkerOperations::toProto);
     }
 
     /**
-     * Creates a new worker.
+     * finds the worker with the passed workerId in the database
      *
      * @param toStore worker to save
      *
@@ -78,9 +77,10 @@ public class WorkerOperations extends AbstractOperations {
     }
 
     /**
-     * Deletes a worker.
+     * Creates a new worker.
      *
      * @param id ID of the worker
+     * @throws IllegalArgumentException if the name or content is not set
      *
      * @return {@code true} if deleted, {@code false} otherwise.
      */
@@ -101,8 +101,8 @@ public class WorkerOperations extends AbstractOperations {
      *
      * @return the resulting WorkerRecord existing in the database
      */
-    public WorkerRecord createWorker(WorkerRecord workerRecord) {
-        workerRecord.setIdWorker(null);
+    public Worker insertWorker(Worker toStore) {
+        assertHasField(toStore, Worker.PLATFORM_FIELD_NUMBER);
 
         return create.transactionResult(conf -> {
             boolean existing = DSL.using(conf).fetchExists(
@@ -123,6 +123,7 @@ public class WorkerOperations extends AbstractOperations {
         });
     }
 
+        return toProto(record);
     /**
      * deletes a worker.
      *
@@ -140,11 +141,14 @@ public class WorkerOperations extends AbstractOperations {
      * <p>
      * The worker will be deleted, there is no way to pay him after this action.
      *
-     * @param workerRecord the worker to
+     * @param workerID the primary key of the worker
      *
      * @throws IllegalArgumentException if the primary key is not set or the worker is not existing
      *                                  in the database
      */
+    public void anonymizeWorker(int workerID) throws IllegalArgumentException {
+        WorkerRecord toAnonymize = getWorkerRecord(workerID)
+                .orElseThrow(() -> new IllegalArgumentException("worker: " + workerID + " is not existing"));
     public void anonymizeWorker(WorkerRecord workerRecord) throws IllegalArgumentException {
         assertHasPrimaryKey(workerRecord);
 
@@ -212,22 +216,24 @@ public class WorkerOperations extends AbstractOperations {
      *
      * @return the found worker or empty
      */
-    public Optional<WorkerRecord> getWorker(int workerID) {
-        return create.selectFrom(Tables.WORKER)
-                .where(Tables.WORKER.ID_WORKER.eq(workerID))
-                .fetchOptional();
+    public WorkerRecord createWorker(WorkerRecord workerRecord) {
+        workerRecord.setIdWorker(null);
+        return create.insertInto(Tables.WORKER)
+                .set(workerRecord)
+                .returning()
+                .fetchOne();
     }
 
-    /**
-     * returns all the workers existing in the database
+    private Worker toProto(WorkerRecord record) {
+        return Worker.newBuilder()
      * <p>
      * TODO: Used?
      *
-     * @return a list with all the workers
-     */
-    public List<WorkerRecord> getAllWorkers() {
-        return create.selectFrom(Tables.WORKER)
-                .fetch();
+                .build();
+    }
+
+    private WorkerRecord mergeRecord(WorkerRecord target, Worker worker) {
+        if (worker.hasField(worker.getDescriptorForType().findFieldByNumber(Worker.PLATFORM_FIELD_NUMBER))) {
     }
 
     private WorkerRecord mergeRecord(WorkerRecord target, Worker worker) {
