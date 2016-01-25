@@ -3,6 +3,7 @@ package edu.kit.ipd.crowdcontrol.objectservice.database;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import edu.kit.ipd.crowdcontrol.objectservice.database.model.Tables;
 import org.apache.commons.io.IOUtils;
+import org.apache.ibatis.jdbc.ScriptRunner;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
@@ -13,6 +14,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -99,7 +101,14 @@ public class DatabaseManager {
                 context.selectFrom(Tables.EXPERIMENT).fetchAny();
             } catch (DataAccessException e) {
                 //TODO: need better idea, but meta() and systable are not working
-                context.execute(initScript);
+                String tables = initScript.substring(0, initScript.indexOf("DELIMITER $$"));
+                context.execute(tables);
+                String delimiter = "DELIMITER $$";
+                String trigger = initScript.substring(initScript.indexOf(delimiter) + delimiter.length(), initScript.length());
+                ScriptRunner scriptRunner = new ScriptRunner(connection);
+                scriptRunner.setDelimiter("$$");
+                scriptRunner.runScript(new StringReader(trigger));
+
             }
         } catch (IOException e) {
             System.err.println("unable to read database-init script");
