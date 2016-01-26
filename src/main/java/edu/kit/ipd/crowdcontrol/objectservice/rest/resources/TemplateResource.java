@@ -69,7 +69,7 @@ public class TemplateResource {
         }
 
         response.status(201);
-        response.header("Location", "/notifications/" + template.getId());
+        response.header("Location", "/templates/" + template.getId());
 
         return template;
     }

@@ -4,10 +4,12 @@ import edu.kit.ipd.crowdcontrol.objectservice.database.DatabaseManager;
 import edu.kit.ipd.crowdcontrol.objectservice.database.operations.NotificationRestOperations;
 import edu.kit.ipd.crowdcontrol.objectservice.database.operations.PlatformOperations;
 import edu.kit.ipd.crowdcontrol.objectservice.database.operations.TemplateOperations;
+import edu.kit.ipd.crowdcontrol.objectservice.database.operations.WorkerOperations;
 import edu.kit.ipd.crowdcontrol.objectservice.rest.Router;
 import edu.kit.ipd.crowdcontrol.objectservice.rest.resources.NotificationResource;
 import edu.kit.ipd.crowdcontrol.objectservice.rest.resources.PlatformResource;
 import edu.kit.ipd.crowdcontrol.objectservice.rest.resources.TemplateResource;
+import edu.kit.ipd.crowdcontrol.objectservice.rest.resources.WorkerResource;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
@@ -65,11 +67,15 @@ public class Main {
         TemplateOperations templateOperations = new TemplateOperations(context);
         NotificationRestOperations notificationRestOperations = new NotificationRestOperations(context);
         PlatformOperations platformOperations = new PlatformOperations(context);
+        WorkerOperations workerOperations = new WorkerOperations(context);
+
+        // TODO Instantiate PlatformManager
 
         new Router(
                 new TemplateResource(templateOperations),
                 new NotificationResource(notificationRestOperations),
-                new PlatformResource(platformOperations)
+                new PlatformResource(platformOperations),
+                new WorkerResource(workerOperations, null)
         ).init();
     }
 }
