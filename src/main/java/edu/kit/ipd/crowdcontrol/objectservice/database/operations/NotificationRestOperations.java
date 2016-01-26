@@ -27,7 +27,7 @@ public class NotificationRestOperations extends AbstractOperations {
      */
     public Range<Notification, Integer> getNotificationsFrom(int cursor, boolean next, int limit) {
         return getNextRange(create.selectFrom(NOTIFICATION), NOTIFICATION.ID_NOTIFICATION, cursor, next, limit)
-                .map(NotificationRestOperations::toProto);
+                .map(this::toProto);
     }
 
     /**
@@ -38,7 +38,7 @@ public class NotificationRestOperations extends AbstractOperations {
      */
     public Optional<Notification> getNotification(int id) {
         return create.fetchOptional(NOTIFICATION, NOTIFICATION.ID_NOTIFICATION.eq(id))
-                .map(NotificationRestOperations::toProto);
+                .map(this::toProto);
     }
 
     /**
@@ -58,7 +58,7 @@ public class NotificationRestOperations extends AbstractOperations {
                 Notification.CHECK_PERIOD_FIELD_NUMBER,
                 Notification.SEND_THRESHOLD_FIELD_NUMBER);
 
-        NotificationRecord record = mergeRecord(create.newRecord(NOTIFICATION), toStore);
+        NotificationRecord record = toRecord(toStore);
         record.store();
 
         return toProto(record);
@@ -72,14 +72,15 @@ public class NotificationRestOperations extends AbstractOperations {
      * @return the updated notification
      */
     public Notification updateNotification(int id, Notification notification) {
-        NotificationRecord record = create
-                .fetchOptional(NOTIFICATION, NOTIFICATION.ID_NOTIFICATION.eq(id))
+        NotificationRecord notificationRecord = toRecord(notification);
+        notificationRecord.setIdNotification(id);
+        return create.update(NOTIFICATION)
+                .set(notificationRecord)
+                .where(NOTIFICATION.ID_NOTIFICATION.eq(id))
+                .returning()
+                .fetchOptional()
+                .map(this::toProto)
                 .orElseThrow(() -> new NotFoundException("Notification does not exist!"));
-
-        record = mergeRecord(record, notification);
-        record.update();
-
-        return toProto(record);
     }
 
     /**
@@ -95,15 +96,7 @@ public class NotificationRestOperations extends AbstractOperations {
         return create.executeDelete(record, NOTIFICATION.ID_NOTIFICATION.eq(id)) == 1;
     }
 
-
-    /**
-     * Converts a notification record to its protobuf representation.
-     *
-     * @param record notification record
-     *
-     * @return Notification.
-     */
-    public static Notification toProto(NotificationRecord record) {
+    private Notification toProto(NotificationRecord record) {
         return Notification.newBuilder()
                 .setId(record.getIdNotification())
                 .setName(record.getName())
@@ -114,15 +107,8 @@ public class NotificationRestOperations extends AbstractOperations {
                 .build();
     }
 
-    /**
-     * Merges a record with the set properties of a protobuf notification.
-     *
-     * @param target record to merge into
-     * @param notification message to merge from
-     *
-     * @return Merged notification record.
-     */
-    public static NotificationRecord mergeRecord(NotificationRecord target, Notification notification) {
+    private NotificationRecord toRecord(Notification notification) {
+        NotificationRecord target = create.newRecord(NOTIFICATION);
         if (notification.hasField(notification.getDescriptorForType().findFieldByNumber(Notification.NAME_FIELD_NUMBER))) {
             target.setName(notification.getName());
         }
