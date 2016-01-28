@@ -24,11 +24,8 @@ public class TemplateResource {
     }
 
     /**
-     * @param request
-     *         Request provided by Spark.
-     * @param response
-     *         Response provided by Spark.
-     *
+     * @param request  Request provided by Spark.
+     * @param response Response provided by Spark.
      * @return A list of all templates.
      */
     public Paginated<Integer> all(Request request, Response response) {
@@ -40,11 +37,8 @@ public class TemplateResource {
     }
 
     /**
-     * @param request
-     *         Request provided by Spark.
-     * @param response
-     *         Response provided by Spark.
-     *
+     * @param request  Request provided by Spark.
+     * @param response Response provided by Spark.
      * @return A single template.
      */
     public Template get(Request request, Response response) {
@@ -53,11 +47,8 @@ public class TemplateResource {
     }
 
     /**
-     * @param request
-     *         Request provided by Spark.
-     * @param response
-     *         Response provided by Spark.
-     *
+     * @param request  Request provided by Spark.
+     * @param response Response provided by Spark.
      * @return The created template.
      */
     public Template put(Request request, Response response) {
@@ -65,7 +56,7 @@ public class TemplateResource {
         try {
             template = operations.create(template);
         } catch (IllegalArgumentException e) {
-           throw new BadRequestException("Name and content must be set!");
+            throw new BadRequestException("Name and content must be set!");
         }
 
         response.status(201);
@@ -75,11 +66,8 @@ public class TemplateResource {
     }
 
     /**
-     * @param request
-     *         Request provided by Spark.
-     * @param response
-     *         Response provided by Spark.
-     *
+     * @param request  Request provided by Spark.
+     * @param response Response provided by Spark.
      * @return The modified template.
      */
     public Template patch(Request request, Response response) {
@@ -88,11 +76,8 @@ public class TemplateResource {
     }
 
     /**
-     * @param request
-     *         Request provided by Spark.
-     * @param response
-     *         Response provided by Spark.
-     *
+     * @param request  Request provided by Spark.
+     * @param response Response provided by Spark.
      * @return {@code null}.
      */
     public Template delete(Request request, Response response) {

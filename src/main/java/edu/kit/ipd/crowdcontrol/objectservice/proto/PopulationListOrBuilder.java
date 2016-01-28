@@ -4,30 +4,34 @@
 package edu.kit.ipd.crowdcontrol.objectservice.proto;
 
 public interface PopulationListOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:crowdcontrol.PopulationList)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:crowdcontrol.PopulationList)
+        com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>repeated .crowdcontrol.Population items = 1;</code>
-   */
-  java.util.List<edu.kit.ipd.crowdcontrol.objectservice.proto.Population> 
-      getItemsList();
-  /**
-   * <code>repeated .crowdcontrol.Population items = 1;</code>
-   */
-  edu.kit.ipd.crowdcontrol.objectservice.proto.Population getItems(int index);
-  /**
-   * <code>repeated .crowdcontrol.Population items = 1;</code>
-   */
-  int getItemsCount();
-  /**
-   * <code>repeated .crowdcontrol.Population items = 1;</code>
-   */
-  java.util.List<? extends edu.kit.ipd.crowdcontrol.objectservice.proto.PopulationOrBuilder> 
-      getItemsOrBuilderList();
-  /**
-   * <code>repeated .crowdcontrol.Population items = 1;</code>
-   */
-  edu.kit.ipd.crowdcontrol.objectservice.proto.PopulationOrBuilder getItemsOrBuilder(
-      int index);
+    /**
+     * <code>repeated .crowdcontrol.Population items = 1;</code>
+     */
+    java.util.List<edu.kit.ipd.crowdcontrol.objectservice.proto.Population>
+    getItemsList();
+
+    /**
+     * <code>repeated .crowdcontrol.Population items = 1;</code>
+     */
+    edu.kit.ipd.crowdcontrol.objectservice.proto.Population getItems(int index);
+
+    /**
+     * <code>repeated .crowdcontrol.Population items = 1;</code>
+     */
+    int getItemsCount();
+
+    /**
+     * <code>repeated .crowdcontrol.Population items = 1;</code>
+     */
+    java.util.List<? extends edu.kit.ipd.crowdcontrol.objectservice.proto.PopulationOrBuilder>
+    getItemsOrBuilderList();
+
+    /**
+     * <code>repeated .crowdcontrol.Population items = 1;</code>
+     */
+    edu.kit.ipd.crowdcontrol.objectservice.proto.PopulationOrBuilder getItemsOrBuilder(
+            int index);
 }

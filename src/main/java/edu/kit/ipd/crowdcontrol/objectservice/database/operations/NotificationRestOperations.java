@@ -22,8 +22,8 @@ public class NotificationRestOperations extends AbstractOperations {
      * Returns a range of notifications starting from {@code cursor}
      *
      * @param cursor pagination cursor
-     * @param next {@code true} for next, {@code false} for previous
-     * @param limit the umber of records
+     * @param next   {@code true} for next, {@code false} for previous
+     * @param limit  the umber of records
      * @return a list of notifications
      */
     public Range<Notification, Integer> getNotificationsFrom(int cursor, boolean next, int limit) {
@@ -47,6 +47,7 @@ public class NotificationRestOperations extends AbstractOperations {
      * <p>
      * the passed notification must have the following fields set:<br>
      * name, description, query, check_period and send_threshold
+     *
      * @param toStore Notification to save
      * @return an instance of notification with ID assigned
      * @throws IllegalArgumentException if one of the specified fields is not set
@@ -68,7 +69,7 @@ public class NotificationRestOperations extends AbstractOperations {
     /**
      * Updates a notification.
      *
-     * @param id ID of the notification
+     * @param id           ID of the notification
      * @param notification new notification contents
      * @return the updated notification
      */

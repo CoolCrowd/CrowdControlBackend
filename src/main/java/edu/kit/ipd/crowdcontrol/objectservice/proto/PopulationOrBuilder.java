@@ -4,59 +4,66 @@
 package edu.kit.ipd.crowdcontrol.objectservice.proto;
 
 public interface PopulationOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:crowdcontrol.Population)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:crowdcontrol.Population)
+        com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>optional int32 id = 1;</code>
-   */
-  int getId();
+    /**
+     * <code>optional int32 id = 1;</code>
+     */
+    int getId();
 
-  /**
-   * <code>optional string question = 2;</code>
-   */
-  java.lang.String getQuestion();
-  /**
-   * <code>optional string question = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getQuestionBytes();
+    /**
+     * <code>optional string question = 2;</code>
+     */
+    java.lang.String getQuestion();
 
-  /**
-   * <code>repeated string answers = 3;</code>
-   */
-  com.google.protobuf.ProtocolStringList
-      getAnswersList();
-  /**
-   * <code>repeated string answers = 3;</code>
-   */
-  int getAnswersCount();
-  /**
-   * <code>repeated string answers = 3;</code>
-   */
-  java.lang.String getAnswers(int index);
-  /**
-   * <code>repeated string answers = 3;</code>
-   */
-  com.google.protobuf.ByteString
-      getAnswersBytes(int index);
+    /**
+     * <code>optional string question = 2;</code>
+     */
+    com.google.protobuf.ByteString
+    getQuestionBytes();
 
-  /**
-   * <code>repeated string accepted_answers = 4;</code>
-   */
-  com.google.protobuf.ProtocolStringList
-      getAcceptedAnswersList();
-  /**
-   * <code>repeated string accepted_answers = 4;</code>
-   */
-  int getAcceptedAnswersCount();
-  /**
-   * <code>repeated string accepted_answers = 4;</code>
-   */
-  java.lang.String getAcceptedAnswers(int index);
-  /**
-   * <code>repeated string accepted_answers = 4;</code>
-   */
-  com.google.protobuf.ByteString
-      getAcceptedAnswersBytes(int index);
+    /**
+     * <code>repeated string answers = 3;</code>
+     */
+    com.google.protobuf.ProtocolStringList
+    getAnswersList();
+
+    /**
+     * <code>repeated string answers = 3;</code>
+     */
+    int getAnswersCount();
+
+    /**
+     * <code>repeated string answers = 3;</code>
+     */
+    java.lang.String getAnswers(int index);
+
+    /**
+     * <code>repeated string answers = 3;</code>
+     */
+    com.google.protobuf.ByteString
+    getAnswersBytes(int index);
+
+    /**
+     * <code>repeated string accepted_answers = 4;</code>
+     */
+    com.google.protobuf.ProtocolStringList
+    getAcceptedAnswersList();
+
+    /**
+     * <code>repeated string accepted_answers = 4;</code>
+     */
+    int getAcceptedAnswersCount();
+
+    /**
+     * <code>repeated string accepted_answers = 4;</code>
+     */
+    java.lang.String getAcceptedAnswers(int index);
+
+    /**
+     * <code>repeated string accepted_answers = 4;</code>
+     */
+    com.google.protobuf.ByteString
+    getAcceptedAnswersBytes(int index);
 }

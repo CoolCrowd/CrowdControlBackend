@@ -10,6 +10,7 @@ import java.util.Properties;
 
 /**
  * A Mailhandler, that can send and fetch mails to another mail address/from a mailbox
+ *
  * @author Felix Rittler
  * @author Niklas Keller
  */
@@ -20,12 +21,12 @@ public class MailHandler implements MailFetcher, MailSender {
     private Store store;
 
     /**
-     *
      * A Mailhandler object to send and fetch emails.
+     *
      * @param props properties, that describe the connection to the mailserver
-     * @param auth an authenticator authenticating the user to connect to the account
-     * @throws AuthenticationFailedException  Throws this exception, if there is a problem with the authentication
-     * @throws MessagingException For other problems e.g. with properties object: unvalid domains, ports not valid etc.
+     * @param auth  an authenticator authenticating the user to connect to the account
+     * @throws AuthenticationFailedException Throws this exception, if there is a problem with the authentication
+     * @throws MessagingException            For other problems e.g. with properties object: unvalid domains, ports not valid etc.
      */
     public MailHandler(Properties props, Authenticator auth) throws MessagingException {
         sender = props.getProperty("sender");
@@ -49,7 +50,7 @@ public class MailHandler implements MailFetcher, MailSender {
     }
 
     @Override
-    public Message[] fetchFolder(String name) throws MessagingException{
+    public Message[] fetchFolder(String name) throws MessagingException {
         connectToStore();
 
         Folder folder = store.getFolder(name);
@@ -74,11 +75,12 @@ public class MailHandler implements MailFetcher, MailSender {
 
     /**
      * Deletes all mails in a certain folder with a certain subject.
+     *
      * @param subject the subject of the mails
-     * @param name the name of the folder
+     * @param name    the name of the folder
      * @throws MessagingException
      */
-    protected void deleteMails(String subject, String name) throws MessagingException{
+    protected void deleteMails(String subject, String name) throws MessagingException {
         connectToStore();
 
         Folder folder = store.getFolder(name);

@@ -20,7 +20,6 @@ public class PlatformResource {
     /**
      * @param request  Request provided by Spark.
      * @param response Response provided by Spark.
-     *
      * @return A list of all platforms.
      */
     public Paginated<String> all(Request request, Response response) {
@@ -34,7 +33,6 @@ public class PlatformResource {
     /**
      * @param request  Request provided by Spark.
      * @param response Response provided by Spark.
-     *
      * @return A single platform.
      */
     public Platform get(Request request, Response response) {

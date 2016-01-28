@@ -4,49 +4,54 @@
 package edu.kit.ipd.crowdcontrol.objectservice.proto;
 
 public final class RatingOuterClass {
-  private RatingOuterClass() {}
-  public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistry registry) {
-  }
-  static com.google.protobuf.Descriptors.Descriptor
-    internal_static_crowdcontrol_Rating_descriptor;
-  static
+    private RatingOuterClass() {
+    }
+
+    public static void registerAllExtensions(
+            com.google.protobuf.ExtensionRegistry registry) {
+    }
+
+    static com.google.protobuf.Descriptors.Descriptor
+            internal_static_crowdcontrol_Rating_descriptor;
+    static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_crowdcontrol_Rating_fieldAccessorTable;
+            internal_static_crowdcontrol_Rating_fieldAccessorTable;
 
-  public static com.google.protobuf.Descriptors.FileDescriptor
-      getDescriptor() {
-    return descriptor;
-  }
-  private static com.google.protobuf.Descriptors.FileDescriptor
-      descriptor;
-  static {
-    java.lang.String[] descriptorData = {
-      "\n\014rating.proto\022\014crowdcontrol\"_\n\006Rating\022\025" +
-      "\n\rexperiment_id\030\001 \001(\005\022\016\n\006rating\030\002 \001(\005\022\020\n" +
-      "\010feedback\030\003 \001(\t\022\016\n\006worker\030\004 \001(\005\022\014\n\004time\030" +
-      "\005 \001(\005B0\n,edu.kit.ipd.crowdcontrol.object" +
-      "service.protoP\001b\006proto3"
-    };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
+    public static com.google.protobuf.Descriptors.FileDescriptor
+    getDescriptor() {
+        return descriptor;
+    }
+
+    private static com.google.protobuf.Descriptors.FileDescriptor
+            descriptor;
+
+    static {
+        java.lang.String[] descriptorData = {
+                "\n\014rating.proto\022\014crowdcontrol\"_\n\006Rating\022\025" +
+                        "\n\rexperiment_id\030\001 \001(\005\022\016\n\006rating\030\002 \001(\005\022\020\n" +
+                        "\010feedback\030\003 \001(\t\022\016\n\006worker\030\004 \001(\005\022\014\n\004time\030" +
+                        "\005 \001(\005B0\n,edu.kit.ipd.crowdcontrol.object" +
+                        "service.protoP\001b\006proto3"
         };
-    com.google.protobuf.Descriptors.FileDescriptor
-      .internalBuildGeneratedFileFrom(descriptorData,
-        new com.google.protobuf.Descriptors.FileDescriptor[] {
-        }, assigner);
-    internal_static_crowdcontrol_Rating_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_crowdcontrol_Rating_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_crowdcontrol_Rating_descriptor,
-        new java.lang.String[] { "ExperimentId", "Rating", "Feedback", "Worker", "Time", });
-  }
+        com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+                new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+                    public com.google.protobuf.ExtensionRegistry assignDescriptors(
+                            com.google.protobuf.Descriptors.FileDescriptor root) {
+                        descriptor = root;
+                        return null;
+                    }
+                };
+        com.google.protobuf.Descriptors.FileDescriptor
+                .internalBuildGeneratedFileFrom(descriptorData,
+                        new com.google.protobuf.Descriptors.FileDescriptor[]{
+                        }, assigner);
+        internal_static_crowdcontrol_Rating_descriptor =
+                getDescriptor().getMessageTypes().get(0);
+        internal_static_crowdcontrol_Rating_fieldAccessorTable = new
+                com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+                internal_static_crowdcontrol_Rating_descriptor,
+                new java.lang.String[]{"ExperimentId", "Rating", "Feedback", "Worker", "Time",});
+    }
 
-  // @@protoc_insertion_point(outer_class_scope)
+    // @@protoc_insertion_point(outer_class_scope)
 }

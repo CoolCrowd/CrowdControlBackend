@@ -31,7 +31,6 @@ public class WorkerResource {
     /**
      * @param request  request provided by Spark.
      * @param response response provided by Spark.
-     *
      * @return Worker if found.
      */
     public Worker identify(Request request, Response response) {
@@ -47,7 +46,6 @@ public class WorkerResource {
     /**
      * @param request  request provided by Spark.
      * @param response response provided by Spark.
-     *
      * @return A list of all workers.
      */
     public Paginated<Integer> all(Request request, Response response) {
@@ -61,7 +59,6 @@ public class WorkerResource {
     /**
      * @param request  request provided by Spark.
      * @param response response provided by Spark.
-     *
      * @return A single worker.
      */
     public Worker get(Request request, Response response) {
@@ -72,7 +69,6 @@ public class WorkerResource {
     /**
      * @param request  request provided by Spark.
      * @param response response provided by Spark.
-     *
      * @return Created worker.
      */
     public Worker put(Request request, Response response) {
@@ -96,7 +92,6 @@ public class WorkerResource {
     /**
      * @param request  request provided by Spark.
      * @param response response provided by Spark.
-     *
      * @return {@code null}.
      */
     public Worker delete(Request request, Response response) {

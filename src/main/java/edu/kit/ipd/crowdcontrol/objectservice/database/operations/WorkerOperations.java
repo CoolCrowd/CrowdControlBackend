@@ -27,7 +27,6 @@ public class WorkerOperations extends AbstractOperations {
      * inserts the WorkerRecord into the database.
      *
      * @param workerRecord the record to insert
-     *
      * @return the resulting WorkerRecord existing in the database
      */
     public WorkerRecord createWorker(WorkerRecord workerRecord) {
@@ -57,8 +56,7 @@ public class WorkerOperations extends AbstractOperations {
      * <p>
      * The worker will be deleted, there is no way to pay him after this action.
      *
-     * @param workerRecord the worker to
-     *
+     * @param id the worker to
      * @throws IllegalArgumentException if the primary key is not set or the worker is not existing
      *                                  in the database
      */
@@ -106,7 +104,6 @@ public class WorkerOperations extends AbstractOperations {
      *
      * @param platform       the platform the wanted worker is working on
      * @param identification the platform-specific identification
-     *
      * @return the found worker or empty
      */
     public Optional<WorkerRecord> getWorker(String platform, String identification) {
@@ -120,7 +117,6 @@ public class WorkerOperations extends AbstractOperations {
      * finds the worker with the passed workerId in the database
      *
      * @param workerID the primary-key of the worker
-     *
      * @return the found worker or empty
      */
     public Optional<WorkerRecord> getWorker(int workerID) {
@@ -133,7 +129,6 @@ public class WorkerOperations extends AbstractOperations {
      * Returns a single worker.
      *
      * @param id ID of the worker
-     *
      * @return the worker or empty if not found
      */
     public Optional<Worker> getWorkerProto(int id) {
@@ -147,7 +142,6 @@ public class WorkerOperations extends AbstractOperations {
      * @param cursor Pagination cursor
      * @param next   {@code true} for next, {@code false} for previous
      * @param limit  Number of records
-     *
      * @return List of workers
      */
     public Range<Worker, Integer> getWorkerList(int cursor, boolean next, int limit) {
@@ -160,9 +154,7 @@ public class WorkerOperations extends AbstractOperations {
      *
      * @param toStore  worker to save
      * @param identity identity of the worker
-     *
      * @return Worker with ID assigned
-     *
      * @throws IllegalArgumentException if the name or content is not set
      */
     public Worker createWorker(Worker toStore, String identity) {

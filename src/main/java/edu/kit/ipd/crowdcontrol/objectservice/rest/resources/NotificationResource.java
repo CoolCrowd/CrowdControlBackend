@@ -19,11 +19,8 @@ public class NotificationResource {
     }
 
     /**
-     * @param request
-     *         Request provided by Spark.
-     * @param response
-     *         Response provided by Spark.
-     *
+     * @param request  Request provided by Spark.
+     * @param response Response provided by Spark.
      * @return A list of all templates.
      */
     public Paginated<Integer> all(Request request, Response response) {
@@ -35,11 +32,8 @@ public class NotificationResource {
     }
 
     /**
-     * @param request
-     *         Request provided by Spark.
-     * @param response
-     *         Response provided by Spark.
-     *
+     * @param request  Request provided by Spark.
+     * @param response Response provided by Spark.
      * @return A single template.
      */
     public Notification get(Request request, Response response) {
@@ -48,11 +42,8 @@ public class NotificationResource {
     }
 
     /**
-     * @param request
-     *         Request provided by Spark.
-     * @param response
-     *         Response provided by Spark.
-     *
+     * @param request  Request provided by Spark.
+     * @param response Response provided by Spark.
      * @return The created template.
      */
     public Notification put(Request request, Response response) {
@@ -70,11 +61,8 @@ public class NotificationResource {
     }
 
     /**
-     * @param request
-     *         Request provided by Spark.
-     * @param response
-     *         Response provided by Spark.
-     *
+     * @param request  Request provided by Spark.
+     * @param response Response provided by Spark.
      * @return The modified template.
      */
     public Notification patch(Request request, Response response) {
@@ -83,11 +71,8 @@ public class NotificationResource {
     }
 
     /**
-     * @param request
-     *         Request provided by Spark.
-     * @param response
-     *         Response provided by Spark.
-     *
+     * @param request  Request provided by Spark.
+     * @param response Response provided by Spark.
      * @return {@code null}.
      */
     public Notification delete(Request request, Response response) {

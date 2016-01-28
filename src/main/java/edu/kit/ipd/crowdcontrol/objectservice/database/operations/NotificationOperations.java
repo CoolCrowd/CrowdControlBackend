@@ -17,15 +17,18 @@ import java.util.List;
 
 /**
  * contains all Operations needed to interact with the notifications-table.
+ *
  * @author LeanderK
  * @version 1.0
  */
 public class NotificationOperations extends AbstractOperations {
     private final Connection readOnlyConnection;
     private final DSLContext readOnlyCreate;
+
     /**
      * creates an new instance of NotificationOperation.
-     * @param manager the manager used to obtain all relevant information about the DB
+     *
+     * @param manager  the manager used to obtain all relevant information about the DB
      * @param username the username belonging to a read-only account on the DB
      * @param password the matching password belonging to a read-only accoint on the DB
      * @throws SQLException if there was a problem establishing a connection to the database
@@ -38,6 +41,7 @@ public class NotificationOperations extends AbstractOperations {
 
     /**
      * returns all the stored notifications
+     *
      * @return a list of notifications
      */
     public List<NotificationRecord> getAllNotifications() {
@@ -47,6 +51,7 @@ public class NotificationOperations extends AbstractOperations {
 
     /**
      * inserts a notification into the database.
+     *
      * @param record the record to insert
      * @return the resulting record (the primary key is guaranteed to be set)
      */
@@ -59,6 +64,7 @@ public class NotificationOperations extends AbstractOperations {
 
     /**
      * deletes a notification from the database
+     *
      * @param notificationID the primary key of the notification
      * @return true if deleted, false if not found
      */
@@ -70,6 +76,7 @@ public class NotificationOperations extends AbstractOperations {
 
     /**
      * updates the notifications lastSend field
+     *
      * @param notificationID the primary key of the notification
      * @return tre if updated, false if not found
      */
@@ -82,6 +89,7 @@ public class NotificationOperations extends AbstractOperations {
 
     /**
      * runs a sql-query in read-only mode
+     *
      * @param sql the seq to execute in read-only mode
      * @return the Result of the query
      */

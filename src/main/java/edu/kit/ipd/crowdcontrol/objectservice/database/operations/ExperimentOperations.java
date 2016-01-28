@@ -9,6 +9,7 @@ import java.util.Optional;
 
 /**
  * responsible for the operations on the Experiment-Table
+ *
  * @author LeanderK
  * @version 1.0
  */
@@ -18,8 +19,10 @@ public class ExperimentOperations extends AbstractOperations {
     }
 
     //TODO need the protobuf for "real" methods
+
     /**
      * inserts the Experiment into the database
+     *
      * @param experimentRecord the record to insert
      * @return the resulting id of the experiment
      */
@@ -29,6 +32,7 @@ public class ExperimentOperations extends AbstractOperations {
 
     /**
      * returns the experiment corresponding to the id
+     *
      * @param id the id
      * @return the optional experiment
      */
@@ -40,6 +44,7 @@ public class ExperimentOperations extends AbstractOperations {
 
     /**
      * updates the experiment and returns whether it was successful
+     *
      * @param experimentRecord the record to update
      * @return true if successful, false if not
      */
@@ -50,6 +55,7 @@ public class ExperimentOperations extends AbstractOperations {
 
     /**
      * deletes the experiment with the passed id if it is not running.
+     *
      * @param id the id of the experiment to delete
      * @return true if deleted, false if not
      * @throws IllegalArgumentException if the experiment is running

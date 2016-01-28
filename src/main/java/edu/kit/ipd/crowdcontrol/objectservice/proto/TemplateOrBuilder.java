@@ -4,40 +4,43 @@
 package edu.kit.ipd.crowdcontrol.objectservice.proto;
 
 public interface TemplateOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:crowdcontrol.Template)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:crowdcontrol.Template)
+        com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>optional int32 id = 1;</code>
-   */
-  int getId();
+    /**
+     * <code>optional int32 id = 1;</code>
+     */
+    int getId();
 
-  /**
-   * <code>optional string name = 2;</code>
-   */
-  java.lang.String getName();
-  /**
-   * <code>optional string name = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getNameBytes();
+    /**
+     * <code>optional string name = 2;</code>
+     */
+    java.lang.String getName();
 
-  /**
-   * <code>optional string content = 3;</code>
-   */
-  java.lang.String getContent();
-  /**
-   * <code>optional string content = 3;</code>
-   */
-  com.google.protobuf.ByteString
-      getContentBytes();
+    /**
+     * <code>optional string name = 2;</code>
+     */
+    com.google.protobuf.ByteString
+    getNameBytes();
 
-  /**
-   * <code>optional .crowdcontrol.AnswerType answer_type = 4;</code>
-   */
-  int getAnswerTypeValue();
-  /**
-   * <code>optional .crowdcontrol.AnswerType answer_type = 4;</code>
-   */
-  edu.kit.ipd.crowdcontrol.objectservice.proto.AnswerType getAnswerType();
+    /**
+     * <code>optional string content = 3;</code>
+     */
+    java.lang.String getContent();
+
+    /**
+     * <code>optional string content = 3;</code>
+     */
+    com.google.protobuf.ByteString
+    getContentBytes();
+
+    /**
+     * <code>optional .crowdcontrol.AnswerType answer_type = 4;</code>
+     */
+    int getAnswerTypeValue();
+
+    /**
+     * <code>optional .crowdcontrol.AnswerType answer_type = 4;</code>
+     */
+    edu.kit.ipd.crowdcontrol.objectservice.proto.AnswerType getAnswerType();
 }

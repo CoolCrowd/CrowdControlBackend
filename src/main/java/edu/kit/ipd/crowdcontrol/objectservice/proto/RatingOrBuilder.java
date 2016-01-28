@@ -4,36 +4,37 @@
 package edu.kit.ipd.crowdcontrol.objectservice.proto;
 
 public interface RatingOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:crowdcontrol.Rating)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:crowdcontrol.Rating)
+        com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>optional int32 experiment_id = 1;</code>
-   */
-  int getExperimentId();
+    /**
+     * <code>optional int32 experiment_id = 1;</code>
+     */
+    int getExperimentId();
 
-  /**
-   * <code>optional int32 rating = 2;</code>
-   */
-  int getRating();
+    /**
+     * <code>optional int32 rating = 2;</code>
+     */
+    int getRating();
 
-  /**
-   * <code>optional string feedback = 3;</code>
-   */
-  java.lang.String getFeedback();
-  /**
-   * <code>optional string feedback = 3;</code>
-   */
-  com.google.protobuf.ByteString
-      getFeedbackBytes();
+    /**
+     * <code>optional string feedback = 3;</code>
+     */
+    java.lang.String getFeedback();
 
-  /**
-   * <code>optional int32 worker = 4;</code>
-   */
-  int getWorker();
+    /**
+     * <code>optional string feedback = 3;</code>
+     */
+    com.google.protobuf.ByteString
+    getFeedbackBytes();
 
-  /**
-   * <code>optional int32 time = 5;</code>
-   */
-  int getTime();
+    /**
+     * <code>optional int32 worker = 4;</code>
+     */
+    int getWorker();
+
+    /**
+     * <code>optional int32 time = 5;</code>
+     */
+    int getTime();
 }

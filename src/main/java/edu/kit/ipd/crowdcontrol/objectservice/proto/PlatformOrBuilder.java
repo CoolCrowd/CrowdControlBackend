@@ -4,50 +4,56 @@
 package edu.kit.ipd.crowdcontrol.objectservice.proto;
 
 public interface PlatformOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:crowdcontrol.Platform)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:crowdcontrol.Platform)
+        com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>optional string id = 1;</code>
-   */
-  java.lang.String getId();
-  /**
-   * <code>optional string id = 1;</code>
-   */
-  com.google.protobuf.ByteString
-      getIdBytes();
+    /**
+     * <code>optional string id = 1;</code>
+     */
+    java.lang.String getId();
 
-  /**
-   * <code>optional string name = 2;</code>
-   */
-  java.lang.String getName();
-  /**
-   * <code>optional string name = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getNameBytes();
+    /**
+     * <code>optional string id = 1;</code>
+     */
+    com.google.protobuf.ByteString
+    getIdBytes();
 
-  /**
-   * <code>repeated .crowdcontrol.Population populations = 3;</code>
-   */
-  java.util.List<edu.kit.ipd.crowdcontrol.objectservice.proto.Population> 
-      getPopulationsList();
-  /**
-   * <code>repeated .crowdcontrol.Population populations = 3;</code>
-   */
-  edu.kit.ipd.crowdcontrol.objectservice.proto.Population getPopulations(int index);
-  /**
-   * <code>repeated .crowdcontrol.Population populations = 3;</code>
-   */
-  int getPopulationsCount();
-  /**
-   * <code>repeated .crowdcontrol.Population populations = 3;</code>
-   */
-  java.util.List<? extends edu.kit.ipd.crowdcontrol.objectservice.proto.PopulationOrBuilder> 
-      getPopulationsOrBuilderList();
-  /**
-   * <code>repeated .crowdcontrol.Population populations = 3;</code>
-   */
-  edu.kit.ipd.crowdcontrol.objectservice.proto.PopulationOrBuilder getPopulationsOrBuilder(
-      int index);
+    /**
+     * <code>optional string name = 2;</code>
+     */
+    java.lang.String getName();
+
+    /**
+     * <code>optional string name = 2;</code>
+     */
+    com.google.protobuf.ByteString
+    getNameBytes();
+
+    /**
+     * <code>repeated .crowdcontrol.Population populations = 3;</code>
+     */
+    java.util.List<edu.kit.ipd.crowdcontrol.objectservice.proto.Population>
+    getPopulationsList();
+
+    /**
+     * <code>repeated .crowdcontrol.Population populations = 3;</code>
+     */
+    edu.kit.ipd.crowdcontrol.objectservice.proto.Population getPopulations(int index);
+
+    /**
+     * <code>repeated .crowdcontrol.Population populations = 3;</code>
+     */
+    int getPopulationsCount();
+
+    /**
+     * <code>repeated .crowdcontrol.Population populations = 3;</code>
+     */
+    java.util.List<? extends edu.kit.ipd.crowdcontrol.objectservice.proto.PopulationOrBuilder>
+    getPopulationsOrBuilderList();
+
+    /**
+     * <code>repeated .crowdcontrol.Population populations = 3;</code>
+     */
+    edu.kit.ipd.crowdcontrol.objectservice.proto.PopulationOrBuilder getPopulationsOrBuilder(
+            int index);
 }

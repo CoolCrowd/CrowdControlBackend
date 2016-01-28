@@ -22,13 +22,9 @@ public class TemplateOperations extends AbstractOperations {
     /**
      * Returns a range of templates starting from {@code cursor}.
      *
-     * @param cursor
-     *         Pagination cursor.
-     * @param next
-     *         {@code true} for next, {@code false} for previous.
-     * @param limit
-     *         Number of records.
-     *
+     * @param cursor Pagination cursor.
+     * @param next   {@code true} for next, {@code false} for previous.
+     * @param limit  Number of records.
      * @return List of templates.
      */
     public Range<Template, Integer> all(int cursor, boolean next, int limit) {
@@ -39,9 +35,7 @@ public class TemplateOperations extends AbstractOperations {
     /**
      * Returns a single template.
      *
-     * @param id
-     *         ID of the template.
-     *
+     * @param id ID of the template.
      * @return The template.
      */
     public Optional<Template> get(int id) {
@@ -52,9 +46,7 @@ public class TemplateOperations extends AbstractOperations {
     /**
      * Creates a new template.
      *
-     * @param toStore
-     *         Template to save.
-     *
+     * @param toStore Template to save.
      * @return Template with ID assigned.
      * @throws IllegalArgumentException if the name or content is not set
      */
@@ -72,11 +64,8 @@ public class TemplateOperations extends AbstractOperations {
     /**
      * Updates a template.
      *
-     * @param id
-     *         ID of the template.
-     * @param template
-     *         New template contents.
-     *
+     * @param id       ID of the template.
+     * @param template New template contents.
      * @return Updated template.
      */
     public Template update(int id, Template template) {
@@ -93,9 +82,7 @@ public class TemplateOperations extends AbstractOperations {
     /**
      * Deletes a template.
      *
-     * @param id
-     *         ID of the template.
-     *
+     * @param id ID of the template.
      * @return {@code true} if deleted, {@code false} otherwise.
      */
     public boolean delete(int id) {
