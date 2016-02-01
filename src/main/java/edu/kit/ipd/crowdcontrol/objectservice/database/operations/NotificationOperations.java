@@ -14,7 +14,7 @@ import org.jooq.impl.DSL;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -142,12 +142,13 @@ public class NotificationOperations extends AbstractOperations {
 
     /**
      * updates the notifications lastSend field
+     *
      * @param notificationID the primary key of the notification
-     * @return tre if updated, false if not found
+     * @return true if updated, false if not found
      */
-    public boolean updateLastSendForNotification(int notificationID) {
+    public boolean updateLastSentForNotification(int notificationID, Instant now) {
         return create.update(Tables.NOTIFICATION)
-                .set(Tables.NOTIFICATION.LASTSENT, Timestamp.valueOf(LocalDateTime.now()))
+                .set(Tables.NOTIFICATION.LASTSENT, Timestamp.from(now))
                 .where(Tables.NOTIFICATION.ID_NOTIFICATION.eq(notificationID))
                 .execute() == 1;
     }
@@ -172,6 +173,7 @@ public class NotificationOperations extends AbstractOperations {
 
     /**
      * runs a sql-query in read-only mode
+     *
      * @param sql the seq to execute in read-only mode
      * @return the Result of the query
      */
