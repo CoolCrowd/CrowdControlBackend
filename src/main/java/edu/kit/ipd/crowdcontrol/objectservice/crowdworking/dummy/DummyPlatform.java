@@ -17,7 +17,8 @@ import java.util.concurrent.CompletableFuture;
  * @version 1.0
  */
 public class DummyPlatform implements Platform, Payment {
-    public final static String NAME = "dummy";
+    public static final String TYPE = "dummy";
+    private final static String NAME = "Dummy Platform";
     /**
      * if the Platform has his own payment service the implementation can return not none.
      *
@@ -41,11 +42,22 @@ public class DummyPlatform implements Platform, Payment {
     /**
      * Get the name of this platform
      *
-     * @return A unique String
+     * @return the string {@code "Dummy Platform"}
      */
     @Override
     public String getName() {
         return NAME;
+    }
+
+    /**
+     * Returns the type of the platform.
+     *
+     * @return the string {@code "dummy"}
+     * @see #TYPE
+     */
+    @Override
+    public String getType() {
+        return TYPE;
     }
 
     /**
