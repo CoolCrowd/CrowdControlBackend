@@ -35,7 +35,7 @@ public class PlatformOperations extends AbstractOperations {
      */
     public Range<Platform, String> getPlatformList(String cursor, boolean next, int limit) {
         SelectConditionStep<PlatformRecord> query = create.selectFrom(PLATFORM)
-                .where(PLATFORM.NAME.notEqual(DummyPlatform.TYPE));
+                .where(PLATFORM.NAME.notEqual(DummyPlatform.ID));
         return getNextRange(query, PLATFORM.ID_PLATFORM, PLATFORM, cursor, next, limit, String::compareTo)
                 .map(PlatformTransformer::toProto);
     }

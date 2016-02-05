@@ -4,7 +4,6 @@ import edu.kit.ipd.crowdcontrol.objectservice.crowdworking.*;
 import edu.kit.ipd.crowdcontrol.objectservice.proto.Experiment;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -17,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
  * @version 1.0
  */
 public class DummyPlatform implements Platform, Payment {
-    public static final String TYPE = "dummy";
+    public static final String ID = "dummy";
     private final static String NAME = "Dummy Platform";
     /**
      * if the Platform has his own payment service the implementation can return not none.
@@ -50,14 +49,14 @@ public class DummyPlatform implements Platform, Payment {
     }
 
     /**
-     * Returns the type of the platform.
+     * Returns the ID of the platform.
      *
      * @return the string {@code "dummy"}
-     * @see #TYPE
+     * @see #ID
      */
     @Override
-    public String getType() {
-        return TYPE;
+    public String getID() {
+        return ID;
     }
 
     /**

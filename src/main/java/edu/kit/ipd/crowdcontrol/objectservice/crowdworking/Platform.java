@@ -28,13 +28,13 @@ public interface Platform {
     String getName();
 
     /**
-     * Returns the type of the platform.
+     * Returns the ID of the platform.
      * <p>
-     * The String must match {@code [a-z0-9_]+} and must be a constant since it is the only way other services can
+     * The String must be unique, must match {@code [a-z0-9_]+} and not change since it is the only way other services can
      * communicate with the platform.
      * @return a String
      */
-    String getType();
+    String getID();
 
     /**
      * Publish a passed experiment on the platform
