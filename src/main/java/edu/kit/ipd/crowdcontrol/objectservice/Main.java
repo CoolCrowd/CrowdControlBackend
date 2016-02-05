@@ -3,6 +3,7 @@ package edu.kit.ipd.crowdcontrol.objectservice;
 import edu.kit.ipd.crowdcontrol.objectservice.crowdworking.Platform;
 import edu.kit.ipd.crowdcontrol.objectservice.crowdworking.PlatformManager;
 import edu.kit.ipd.crowdcontrol.objectservice.crowdworking.dummy.DummyPlatform;
+import edu.kit.ipd.crowdcontrol.objectservice.crowdworking.fallback.FallbackWorker;
 import edu.kit.ipd.crowdcontrol.objectservice.database.DatabaseMaintainer;
 import edu.kit.ipd.crowdcontrol.objectservice.database.DatabaseManager;
 import edu.kit.ipd.crowdcontrol.objectservice.database.operations.*;
@@ -102,7 +103,7 @@ public class Main {
         DummyPlatform dummyPlatform = new DummyPlatform();
         List<Platform> crowdPlatforms = new ArrayList<>();
         crowdPlatforms.add(dummyPlatform);
-        PlatformManager platformManager = new PlatformManager(crowdPlatforms, null, tasksOperations, platformOperations,
+        PlatformManager platformManager = new PlatformManager(crowdPlatforms, new FallbackWorker(), null, tasksOperations, platformOperations,
                 workerOperations); // TODO set fallbackPayment
 
         new Router(
