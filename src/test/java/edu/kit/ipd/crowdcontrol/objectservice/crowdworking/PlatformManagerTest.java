@@ -11,10 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 import static org.mockito.Mockito.*;
@@ -45,6 +42,11 @@ public class PlatformManagerTest {
         platformOps = mock(PlatformOperations.class);
         workerOps = mock(WorkerOperations.class);
 
+        when(platformOps.getPlatforms()).thenReturn(Collections.emptyList());
+        when(platformOps.getPlatform("test1")).thenReturn(Optional.empty());
+        when(platformOps.getPlatform("test2")).thenReturn(Optional.empty());
+        when(platformOps.getPlatform("test3")).thenReturn(Optional.empty());
+
         manager = new PlatformManager(platforms,
                 param -> "42",
                 (id, experiment1, paymentJob) -> CompletableFuture.completedFuture(true),
@@ -54,7 +56,6 @@ public class PlatformManagerTest {
     }
     @Test
     public void dbinit(){
-        verify(platformOps).deleteAllPlatforms();
 
         platforms.forEach(platform -> {
             //check that every platform got init

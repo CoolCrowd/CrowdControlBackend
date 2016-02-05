@@ -8,6 +8,8 @@ import edu.kit.ipd.crowdcontrol.objectservice.proto.Platform;
 import org.jooq.DSLContext;
 import org.jooq.SelectConditionStep;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static edu.kit.ipd.crowdcontrol.objectservice.database.model.Tables.PLATFORM;
@@ -65,9 +67,19 @@ public class PlatformOperations extends AbstractOperations {
     }
 
     /**
-     * Delete all platforms existing in the database.
+     * Update the record of the given id with the new values
+     * @param rec A new Platformrecord
      */
-    public void deleteAllPlatforms() {
-        create.deleteFrom(Tables.PLATFORM).execute();
+    public void updatePlatform(PlatformRecord rec) {
+        //TODO LEAAAAANDER
+    }
+
+    /**
+     * Get a List of all Platforms
+     * @return List containing all platforms which are currently in the database
+     */
+    public List<PlatformRecord> getPlatforms() {
+        //TODO LEAAAAANDER
+        return Collections.emptyList();
     }
 }

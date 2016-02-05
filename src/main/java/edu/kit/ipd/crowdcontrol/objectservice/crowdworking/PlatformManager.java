@@ -9,6 +9,7 @@ import edu.kit.ipd.crowdcontrol.objectservice.database.operations.PlatformOperat
 import edu.kit.ipd.crowdcontrol.objectservice.database.operations.TasksOperations;
 import edu.kit.ipd.crowdcontrol.objectservice.database.operations.WorkerOperations;
 import edu.kit.ipd.crowdcontrol.objectservice.proto.Experiment;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.List;
 import java.util.Map;
@@ -54,20 +55,38 @@ public class PlatformManager {
         //create hashmap of platforms
         platforms = crowdPlatforms.stream()
                 .collect(Collectors.toMap(Platform::getID, Function.identity()));
-        //clear database
-        platformOps.deleteAllPlatforms();
+
         //update database
         platforms.forEach((s, platform) -> {
-            PlatformRecord rec = new PlatformRecord();
-            rec.setIdPlatform(platform.getID());
-            rec.setName(platform.getName());
-            rec.setNeedsEmail(false);
+            //check if a platform is already in the database
 
-            rec.setNeedsEmail(isNeedemail(platform));
-            rec.setRenderCalibrations(platform.isCalibrationAllowed());
-
-            platformOps.createPlatform(rec);
+            //create a record which would match this
+            PlatformRecord rec = new PlatformRecord(
+                    platform.getID(),
+                    platform.getName(),
+                    platform.isCalibrationAllowed(),
+                    isNeedemail(platform)
+                    //,TODO lock bit true
+                    );
+            //check if it present or not and create it or update it
+            if (!platformOps.getPlatform(platform.getID()).isPresent()) {
+                platformOps.createPlatform(rec);
+            } else {
+                platformOps.updatePlatform(rec);
+            }
         });
+
+        // platforms which are not active anymore are getting dead locked
+        for (PlatformRecord record : platformOps.getPlatforms()) {
+            Platform platform = platforms.get(record.getIdPlatform());
+            //we cannot find this platform in our instance mark it dead
+            if (platform == null) {
+                //TODO record.setLockBit(true);
+                LogManager.getLogger("Crowdplatform").fatal("Mark platform "+record.getIdPlatform()+" as locked");
+                platformOps.updatePlatform(record);
+            }
+        }
+
     }
 
     private boolean isNeedemail(Platform platform) {
