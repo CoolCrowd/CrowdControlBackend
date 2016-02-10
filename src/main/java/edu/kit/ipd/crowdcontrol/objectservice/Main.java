@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Niklas Keller
@@ -56,15 +58,7 @@ public class Main {
 
         Config config = Yaml.loadType(Main.class.getResourceAsStream("/config.yml"), Config.class);
 
-        if (!check(config)) {
-            System.err.println("Properties file invalid.");
-            System.exit(-1);
-        }
-
-        if (config.database.maintainInterval == 0)
-            config.database.maintainInterval = 24;
-        else if (config.database.maintainInterval < 0)
-            throw new ConfigException("negativ maintainInterval of database is not valid");
+        check(config);
 
         SQLDialect dialect = SQLDialect.valueOf(config.database.dialect);
         DatabaseManager databaseManager;
@@ -225,11 +219,42 @@ public class Main {
         ).init();
     }
 
-    private static boolean check(Config config) {
+    private static void check(Config config) throws ConfigException {
         if (config == null || config.moneytransfer == null || config.database == null || config.deployment == null ||
-                config.platforms == null || config.database.writing == null || config.database.readonly == null) {
-            return false;
+                config.platforms == null || config.database.writing == null || config.database.readonly == null ||
+                config.database.dialect == null || config.database.url == null || config.database.readonly.user == null ||
+                config.database.readonly.password == null || config.database.writing.user == null ||
+                config.database.writing.password == null || config.deployment.origin == null || config.deployment.workerService == null ||
+                config.moneytransfer.notificationMailAddress == null || config.moneytransfer.parsingPassword == null) {
+            throw new ConfigException("Configuration file incomplete");
         }
-        return true;
+
+        if (config.database.maintainInterval == 0) {
+            config.database.maintainInterval = 24;
+        } else if (config.database.maintainInterval < 0) {
+            throw new ConfigException("negative maintainInterval of database is not valid");
+        }
+
+
+        if (config.moneytransfer.scheduleInterval == 0) {
+            config.moneytransfer.scheduleInterval = 7;
+        } else if (config.moneytransfer.scheduleInterval < 0) {
+            throw new ConfigException("A negative schedule interval is invalid.");
+        }
+
+        String codePatternStr = ".+@.+[.].+";
+        Pattern codePattern = Pattern.compile(codePatternStr);
+        Matcher codeMatcher = codePattern.matcher(config.moneytransfer.notificationMailAddress);
+        if (!codeMatcher.find()) {
+            throw new ConfigException("Notification Mail Address is invalid.");
+        }
+
+        for (ConfigPlatform platform : config.platforms) {
+            if (platform.type == null || platform.user == null || platform.password == null || platform.name == null ||
+                    platform.url == null) {
+                throw new ConfigException("Some platform specific details are missing in the configuration file.");
+            }
+        }
+
     }
 }
