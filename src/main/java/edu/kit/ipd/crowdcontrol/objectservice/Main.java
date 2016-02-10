@@ -56,6 +56,11 @@ public class Main {
 
         Config config = Yaml.loadType(Main.class.getResourceAsStream("/config.yml"), Config.class);
 
+        if (!check(config)) {
+            System.err.println("Properties file invalid.");
+            System.exit(-1);
+        }
+
         if (config.database.maintainInterval == 0)
             config.database.maintainInterval = 24;
         else if (config.database.maintainInterval < 0)
@@ -218,5 +223,13 @@ public class Main {
                 new WorkerCalibrationResource(workerCalibrationOperations),
                 origin
         ).init();
+    }
+
+    private static boolean check(Config config) {
+        if (config == null || config.moneytransfer == null || config.database == null || config.deployment == null ||
+                config.platforms == null || config.database.writing == null || config.database.readonly == null) {
+            return false;
+        }
+        return true;
     }
 }
