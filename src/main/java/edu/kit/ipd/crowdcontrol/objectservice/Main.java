@@ -249,8 +249,30 @@ public class Main {
         }
 
         for (ConfigPlatform platform : config.platforms) {
-            if (platform.type == null) {
-                throw new ConfigException("Some platform specific details are missing in the configuration file.");
+            if (platform.type == null || platform.name == null) {
+                throw new ConfigException("The type or name of a platform cannot be empty.");
+            }
+            switch (platform.type.toLowerCase()) {
+                case "mturk":
+                    if (platform.user == null || platform.password == null || platform.url == null || config.deployment.workerService == null) {
+                        throw new ConfigException("Some mturk specific details are missing.");
+                    }
+                    if (platform.apiKey != null || platform.projectId != null || platform.calibrationsAllowed) {
+                        throw new ConfigException("Some mturk specific details from the configuration file cannot be applied.");
+                    }
+                case "pybossa":
+                    if (config.deployment.workerService == null || platform.apiKey == null || platform.url == null ||
+                            platform.projectId == null) {
+                        throw new ConfigException("Some pybossa specific details are missing.");
+                    }
+                    if (platform.password != null) {
+                        throw new ConfigException("Some pybossa specific details from the configuration file cannot be applied.");
+                    }
+                case "dummy":
+                    if (config.deployment.workerService != null || platform.apiKey != null || platform.url != null ||
+                            platform.projectId != null || platform.calibrationsAllowed || platform.password != null) {
+                        throw new ConfigException("Some dummy plaftorm specific details from the configuration file cannot be applied.");
+                    }
             }
         }
 
