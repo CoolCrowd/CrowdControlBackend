@@ -223,8 +223,7 @@ public class Main {
         if (config == null || config.moneytransfer == null || config.database == null || config.deployment == null ||
                 config.platforms == null || config.database.writing == null || config.database.readonly == null ||
                 config.database.dialect == null || config.database.url == null || config.database.readonly.user == null ||
-                config.database.readonly.password == null || config.database.writing.user == null ||
-                config.database.writing.password == null || config.deployment.origin == null || config.deployment.workerService == null ||
+                config.database.writing.user == null || config.deployment.origin == null ||
                 config.moneytransfer.notificationMailAddress == null || config.moneytransfer.parsingPassword == null) {
             throw new ConfigException("Configuration file incomplete");
         }
@@ -250,8 +249,7 @@ public class Main {
         }
 
         for (ConfigPlatform platform : config.platforms) {
-            if (platform.type == null || platform.user == null || platform.password == null || platform.name == null ||
-                    platform.url == null) {
+            if (platform.type == null) {
                 throw new ConfigException("Some platform specific details are missing in the configuration file.");
             }
         }
