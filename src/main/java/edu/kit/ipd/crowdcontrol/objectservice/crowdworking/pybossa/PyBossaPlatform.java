@@ -1,5 +1,6 @@
 package edu.kit.ipd.crowdcontrol.objectservice.crowdworking.pybossa;
 
+import com.google.common.primitives.Ints;
 import edu.kit.ipd.crowdcontrol.objectservice.crowdworking.Payment;
 import edu.kit.ipd.crowdcontrol.objectservice.crowdworking.Platform;
 import edu.kit.ipd.crowdcontrol.objectservice.crowdworking.UnidentifiedWorkerException;
@@ -8,7 +9,6 @@ import edu.kit.ipd.crowdcontrol.objectservice.proto.Experiment;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -23,7 +23,7 @@ public class PyBossaPlatform implements Platform {
     /**
      * IDTASK_COUNT is the number of idTasks that are used to get the worker's id
      */
-    private static final int IDTASK_COUNT = 2;
+    private static final int IDTASK_COUNT = 3;
     private final String workerServiceUrl;
     private final String name;
     private final int projectID;
@@ -50,16 +50,13 @@ public class PyBossaPlatform implements Platform {
         this.calibsAllowed = calibsAllowed;
 
         this.requests = new PyBossaRequests(apiUrl, this.projectID, apiKey);
-
     }
 
     /**
      * Initializes the pybossa idTasks. This makes requests to the pybossa platform
      */
     public void init() {
-        if (!getIdTasks()) {
-            createIdTasks();
-        }
+        initializeIdTasks();
     }
 
     @Override
@@ -89,9 +86,14 @@ public class PyBossaPlatform implements Platform {
                 .put("info", new JSONObject()
                         .put("url", workerServiceUrl)
                         .put("expID", experiment.getId())
-                        .put("platformName", name)
+                                .put("platform", getID())
                         .put("idTasks", new JSONArray(idTasks))
-                        .put("type", "experiment"))
+                        .put("type", "experiment")
+                        .put("paymentBase", experiment.getPaymentBase())
+                        .put("paymentRating", experiment.getPaymentRating())
+                        .put("paymentAnswer", experiment.getPaymentAnswer())
+                        //pybossa doesn't support tags
+                )
                 .put("priority_0", 1)
                 .put("n_answers", experiment.getNeededAnswers().getValue())))
         );
@@ -110,7 +112,7 @@ public class PyBossaPlatform implements Platform {
                     .put("info", new JSONObject()
                             .put("url", workerServiceUrl)
                             .put("expID", experiment.getId())
-                            .put("platformName", name)
+                            .put("platform", getID())
                             .put("idTasks", new JSONArray(idTasks))
                     )
                     .put("n_answers", experiment.getNeededAnswers()));
@@ -134,67 +136,73 @@ public class PyBossaPlatform implements Platform {
      * @throws UnidentifiedWorkerException if the worker cannot be identified
      */
     private String identifyWorker(Map<String, String[]> param) throws UnidentifiedWorkerException {
-        String givenWorkerId = param.get("id")[0];
-        String givenIdTask = param.get("idTask")[0];
-        String givenCode = param.get("code")[0];
+        String[] emptyDefault = {""};
+        String givenWorkerId = param.getOrDefault("workerId", emptyDefault)[0];
+        String givenIdTask = param.getOrDefault("idTask", emptyDefault)[0];
+        String givenCode = param.getOrDefault("code", emptyDefault)[0];
 
-        if (givenWorkerId.isEmpty() || givenCode.isEmpty() || givenIdTask.isEmpty()) {
+        String errorMessage = "";
+        if (!givenWorkerId.isEmpty() && !givenCode.isEmpty() && !givenIdTask.isEmpty()) {
             // check if valid idTask
-            if (Arrays.asList(idTasks).contains(givenIdTask)) {
+            if (Ints.contains(idTasks, java.lang.Integer.parseInt(givenIdTask))) {
                 // check if givenCode matches saved random
                 JSONArray taskRuns = requests.getTaskRuns(givenIdTask, givenWorkerId);
                 // if all given values are valid there should only be one task run returned
-                if (taskRuns.length() == 1) {
+                if (taskRuns.length() > 0) {
+                    // delete task run anyway, so the idTask can be used again
+                    requests.deleteTaskRun(taskRuns.getJSONObject(0).getInt("id"));
                     String savedCode = taskRuns.getJSONObject(0).getJSONObject("info").optString("code", "");
                     if (savedCode.equals(givenCode)) {
                         return givenWorkerId;
+                    } else {
+                        errorMessage = String.format("The identification code passed by worker %s, " +
+                                "doesn't equal the code stored in the taskRun.", givenWorkerId);
                     }
+                } else {
+                    errorMessage = String.format("There was no taskRun found for idTask %s and worker %s.",
+                            givenIdTask, givenWorkerId);
                 }
-                // delete task run anyway
-                requests.deleteTaskRun(taskRuns.getJSONObject(0).getInt("id"));
             }
+        } else {
+            errorMessage = "Invalid parameters passed to PyBossaPlatform. Expected: " +
+                    "workerId={id}&idTask={idTaskId}&code={theCode}";
         }
-        throw new UnidentifiedWorkerException();
+        throw new UnidentifiedWorkerException(errorMessage);
     }
 
     /**
-     * Checks for existing idTasks
+     * Checks for existing idTasks and
      *
-     * @return true if idTasks are present in the current project, else false
+     * @throws PyBossaRequestException when the idtask could not be initialized
      */
-    private boolean getIdTasks() {
+    private void initializeIdTasks() {
         JSONArray allTasks = requests.getAllTasks();
-        // idTasks have to be the first two objects
-        if (allTasks.length() <= IDTASK_COUNT) {
-            return false;
-        }
+        // idTasks should be the first objects
         for (int i = 0; i < IDTASK_COUNT; i++) {
             JSONObject task = allTasks.optJSONObject(i);
             if (task != null) {
                 JSONObject info = task.optJSONObject("info");
                 if (info.optString("type", "none").equals("idTask")) {
                     idTasks[i] = task.getInt("id");
+                } else {
+                    throw new PyBossaRequestException("Could not initialize tasks for platform "
+                            + this.getName() + ": Invalid idTasks.");
                 }
             } else {
-                throw new PyBossaRequestException("Could not initialize tasks for platform "
-                        + this.getName() + ": Invalid idTasks.");
+                idTasks[i] = createIdTask();
             }
         }
-        return true;
     }
 
     /**
-     * Creates 2 new idTasks with empty info object and assigns the IDs to the idTasks
+     * Creates new idTasks with empty info object and assigns the IDs to the idTasks
      */
-    private void createIdTasks() {
+    private int createIdTask() {
         JSONObject jsonTask = new JSONObject()
                 .put("project_id", projectID)
                 .put("priority_0", 0)
                 .put("info", new JSONObject()
                         .put("type", "idTask"));
-
-        for (int i = 0; i < IDTASK_COUNT; i++) {
-            idTasks[i] = requests.postTask(jsonTask);
-        }
+        return requests.postTask(jsonTask);
     }
 }
