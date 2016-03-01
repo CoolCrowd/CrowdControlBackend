@@ -85,7 +85,7 @@ public class ExperimentOperations extends AbstractOperations {
      * @return the state
      */
     public Experiment.State getExperimentState(int id) {
-        Set<ExperimentsPlatformStatusPlatformStatus> statuses = create.select(EXPERIMENTS_PLATFORM_STATUS.PLATFORM_STATUS)
+        Set<ExperimentsPlatformStatusPlatformStatus> statuses = create.selectFrom(EXPERIMENTS_PLATFORM_STATUS)
                 .where(EXPERIMENTS_PLATFORM_STATUS.PLATFORM.in(
                         DSL.select(EXPERIMENTS_PLATFORM.IDEXPERIMENTS_PLATFORMS)
                                 .from(EXPERIMENTS_PLATFORM)
@@ -213,11 +213,8 @@ public class ExperimentOperations extends AbstractOperations {
                         .where(ALGORITHM_ANSWER_QUALITY.ID_ALGORITHM_ANSWER_QUALITY.eq(experimentRecord.getAlgorithmQualityAnswer()))
         );
 
-        if (numberParameterAnswerQuality != numberNeededParameterAnswerQuality) {
-            return false;
-        }
+        return numberParameterAnswerQuality == numberNeededParameterAnswerQuality;
 
-        return true;
     }
 
     /**
