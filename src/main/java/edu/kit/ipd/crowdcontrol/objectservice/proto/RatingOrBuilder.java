@@ -18,9 +18,17 @@ public interface RatingOrBuilder extends
   int getExperimentId();
 
   /**
-   * <code>optional int32 rating = 3;</code>
+   * <code>optional .crowdcontrol.Integer rating = 3;</code>
    */
-  int getRating();
+  boolean hasRating();
+  /**
+   * <code>optional .crowdcontrol.Integer rating = 3;</code>
+   */
+  edu.kit.ipd.crowdcontrol.objectservice.proto.Integer getRating();
+  /**
+   * <code>optional .crowdcontrol.Integer rating = 3;</code>
+   */
+  edu.kit.ipd.crowdcontrol.objectservice.proto.IntegerOrBuilder getRatingOrBuilder();
 
   /**
    * <code>optional string feedback = 4;</code>

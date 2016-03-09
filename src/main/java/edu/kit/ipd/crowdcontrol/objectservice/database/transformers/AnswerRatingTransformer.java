@@ -5,6 +5,7 @@ import edu.kit.ipd.crowdcontrol.objectservice.database.model.tables.records.Cons
 import edu.kit.ipd.crowdcontrol.objectservice.database.model.tables.records.RatingRecord;
 import edu.kit.ipd.crowdcontrol.objectservice.proto.Answer;
 import edu.kit.ipd.crowdcontrol.objectservice.proto.Constraint;
+import edu.kit.ipd.crowdcontrol.objectservice.proto.Integer;
 import edu.kit.ipd.crowdcontrol.objectservice.proto.Rating;
 
 import java.sql.Timestamp;
@@ -81,7 +82,7 @@ public class AnswerRatingTransformer extends AbstractTransformer {
 
         return builder(Rating.newBuilder())
                 .set(ratingRecord.getExperiment(), Rating.Builder::setExperimentId)
-                .set(ratingRecord.getRating(), Rating.Builder::setRating)
+                .set(ratingRecord.getRating(), (builder, rating) -> builder.setRating(Integer.newBuilder().setValue(rating).build()))
                 .set(ratingRecord.getFeedback(), Rating.Builder::setFeedback)
                 .getBuilder()
                 //divide by 1000 because java uses milliseconds and proto expects seconds
@@ -110,7 +111,7 @@ public class AnswerRatingTransformer extends AbstractTransformer {
         return merge(ratingRecord, rating, (field, record) -> {
             switch (field) {
                 case Rating.RATING_FIELD_NUMBER:
-                    record.setRating(rating.getRating());
+                    record.setRating(rating.getRating().getValue());
                     break;
                 case Rating.FEEDBACK_FIELD_NUMBER:
                     record.setFeedback(rating.getFeedback());
