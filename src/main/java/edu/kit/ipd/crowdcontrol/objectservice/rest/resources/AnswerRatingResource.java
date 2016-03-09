@@ -145,7 +145,10 @@ public class AnswerRatingResource {
         Rating rating = request.attribute("input");
 
         if (rating.getQuality() != 0) {
-            throw new IllegalArgumentException("Quality cannot be set when creating a Rating");
+            throw new BadRequestException("Quality cannot be set when creating a Rating");
+        }
+        if (!rating.hasRating()) {
+            throw new BadRequestException("Rating must be set");
         }
 
         Rating result;
