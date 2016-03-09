@@ -283,7 +283,7 @@ public class AnswerRatingOperations extends AbstractOperations {
         }
 
         create.update(RATING)
-                .set(RATING.RATING_, rating.getRating())
+                .set(RATING.RATING_, rating.getRating().getValue())
                 .set(RATING.FEEDBACK, feedback)
                 .where(RATING.ID_RATING.eq(rating.getRatingId()))
                 .execute();
