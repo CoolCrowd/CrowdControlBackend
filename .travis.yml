@@ -15,6 +15,7 @@ cache:
   - "$HOME/.gradle/wrapper/"
 
 before_script:
+- mysql --version
 - mysql -u "root" < src/main/resources/db.sql
 - cp src/main/resources/config.travis.yml src/main/resources/config.yml
 
