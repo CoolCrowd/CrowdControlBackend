@@ -2,7 +2,6 @@ package edu.kit.ipd.crowdcontrol.objectservice.crowdworking.mturk;
 
 import com.amazonaws.mturk.requester.doc._2014_08_15.Assignment;
 import com.amazonaws.mturk.requester.doc._2014_08_15.AssignmentStatus;
-import com.amazonaws.mturk.requester.doc._2014_08_15.BonusPayment;
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
 import com.google.gson.JsonElement;
@@ -18,17 +17,10 @@ import edu.kit.ipd.crowdcontrol.objectservice.template.Template;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 
@@ -44,6 +36,7 @@ public class MturkPlatform implements Platform,Payment {
     private final MTurkConnection connection;
     private final String workerServiceUrl;
     private final String workerUIUrl;
+    private final HitExtender hitExtender;
     /**
      * A new mturk platform instance
      * @param user user to login
@@ -51,7 +44,8 @@ public class MturkPlatform implements Platform,Payment {
      * @param url instance to connect to
      * @param workerUIUrl path where to find the workerUI
      */
-    public MturkPlatform(String user, String password, String url, String name, String workerServiceUrl, String workerUIUrl) {
+    public MturkPlatform(String user, String password, String url, String name, String workerServiceUrl, String workerUIUrl, HitExtender hitExtender) {
+        this.hitExtender = hitExtender;
         this.workerUIUrl = workerUIUrl;
         connection = new MTurkConnection(user, password, url);
         this.workerServiceUrl = workerServiceUrl;
@@ -128,11 +122,12 @@ public class MturkPlatform implements Platform,Payment {
                 TWO_HOURS, //you have 2 hours to do the assignment
                 THIRTY_DAYS, // the experiment is staying for 30 days
                 tags,
-                experiment.getNeededAnswers().getValue()*experiment.getRatingsPerAnswer().getValue(),
+                1000000000,
                 2592000, //this is a little problem we have to specify when autoapproval is kicking in this is happening after 2592000s
                 "",
                 content)
                 .thenApply(id -> {
+                    hitExtender.addHit(id);
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.add("identification", new JsonPrimitive(id));
                     return jsonObject;
@@ -141,7 +136,9 @@ public class MturkPlatform implements Platform,Payment {
 
     @Override
     public CompletableFuture<Boolean> unpublishTask(JsonElement data) {
-        return new UnpublishHIT(connection, data.getAsJsonObject().get("identification").getAsString());
+        String id = data.getAsJsonObject().get("identification").getAsString();
+        hitExtender.removeHit(id);
+        return new UnpublishHIT(connection, id);
     }
 
     /**
