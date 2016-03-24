@@ -1,4 +1,4 @@
-package edu.kit.ipd.crowdcontrol.objectservice.rest.resources;
+package edu.kit.ipd.crowdcontrol.objectservice.moneytransfer;
 
 import edu.kit.ipd.crowdcontrol.objectservice.Main;
 import edu.kit.ipd.crowdcontrol.objectservice.moneytransfer.MoneyTransferManager;
