@@ -66,7 +66,7 @@ public class MturkPlatform implements Platform,Payment {
 
     @Override
     public Boolean isCalibrationAllowed() {
-        return false;
+        return true;
     }
 
     @Override
