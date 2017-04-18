@@ -20,6 +20,9 @@ mail :
     # disabled = true will ignore the mail configuration and print to the command-line
     disabled : true
 
+    # E-mail address to send notification mails to
+    admin: pseipd@gmail.com
+
 # Deployment of the object service / control ui
 deployment:
     # Origin of the control ui
@@ -52,9 +55,6 @@ moneytransfer:
     # Password used to verify a valid Amazon GiftCode e-mail
     # enter password as message on the Amazon homepage when buying GiftCodes
     parsingPassword: test
-
-    # E-mail address to send notification mails to
-    notificationMailAddress: pseipd@gmail.com
 
     # Interval in days, when the workers get paid off
     scheduleInterval: 7
